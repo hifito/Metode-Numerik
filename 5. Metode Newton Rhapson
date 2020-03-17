@@ -1,0 +1,65 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+class fungsi:
+    def __init__(self, p, q, r):
+        self.p = p
+        self.q = q
+        self.r = r
+
+    def fx(self, x): 
+        return self.p*x**2 + self.q*x + self.r
+    
+    def turunan(self, x):
+        return self.p*2*x + self.q
+    
+print("px^2 + qx + r\n")
+p = float(input("masukan nilai p: "))
+q = float(input("masukan nilai q: "))
+r = float(input("masukan nilai r: "))
+
+print(f"\nfungsi: ({p})x^2 + ({q})x + ({r})\n")
+
+def newton_rhapson(p, q, r):
+
+    func = fungsi(p, q, r)
+    x = float(input("Masukkan tebakan : "))
+    error = float(input("Masukkan error : "))
+    n = int(input("Masukkan banyak iterasi : "))
+
+    print("\nI\tx\tf(x)")
+
+    for i in range(0, n):
+        print("%d\t%.3f\t%.3f" % (i, x, func.fx(x)))
+        if abs(func.fx(x)) <= error:
+            break
+        x = x - (func.fx(x) / func.turunan(x))
+
+    return x
+
+def grafik_kuadrat(a, b, c):
+    # 100 linearly spaced numbers
+    x = np.linspace(-10, 10, 100)
+
+    # the function, which is y = x^2 here
+    y = a*x**2 + b*x + c
+
+    # setting the axes at the centre
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    ax.set_title('Grafik Fungsi Metode Tabel')
+    ax.spines['left'].set_position('center')
+    ax.spines['bottom'].set_position('zero')
+    ax.spines['right'].set_color('none')
+    ax.spines['left'].set_color('none')
+    ax.xaxis.set_ticks_position('bottom')
+    ax.yaxis.set_ticks_position('left')
+
+    # plot the function
+    plt.plot(x, y, 'r')
+
+    # show the plot
+    plt.show()
+    
+newton_rhapson(p, q, r)
+grafik_kuadrat(p, q, r)
