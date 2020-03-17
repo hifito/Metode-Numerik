@@ -1,0 +1,77 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+class fungsi:
+    def __init__(self, p, q, r):
+        self.p = p
+        self.q = q
+        self.r = r
+        
+    def fx(self, x): 
+        return self.p*x**2 + self.q*x + self.r
+     
+    def nilaix2(self, x0, x1, y0, y1):
+        return x1 - (y1 * ((x1 - x0) / (y1 - y0)))
+
+print("px^2 + qx + r\n")
+p = float(input("masukan nilai p: "))
+q = float(input("masukan nilai q: "))
+r = float(input("masukan nilai r: "))
+
+print(f"\nfungsi: ({p})x^2 + ({q})x + ({r})\n")
+
+def secant(p, q, r):
+
+    func = fungsi(p, q, r)
+    x0 = float(input("Masukkan x0: "))
+    x1 = float(input("Masukkan x1: "))
+    error = float(input("Masukkan error: "))
+    n = int(input("Masukkan banyak iterasi: "))
+    i = 0
+
+    if (func.fx(x0)*func.fx(x1) > 0):
+        print("\nDiantara x0 dan x1 tidak ditemukan titik nol")
+        return None
+
+    print("\nI\txi\tf(xi)")
+    print("%d\t%.3f\t%.3f" % (i, x0, func.fx(x0)))
+
+    for i in range(0, n):
+        y0 = func.fx(x0)
+        y1 = func.fx(x1)
+        print("%d\t%.3f\t%.3f" % (i+1, x1, y1))
+        if abs(y1) <= error:
+            break
+        x2 = func.nilaix2(x0, x1, y0, y1)
+        x0 = x1
+        x1 = x2
+        
+    print("\nNilai x =", x1)
+    return x1
+
+def grafik_kuadrat(a, b, c):
+    # 100 linearly spaced numbers
+    x = np.linspace(-10, 10, 100)
+
+    # the function, which is y = x^2 here
+    y = a*x**2 + b*x + c
+
+    # setting the axes at the centre
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    ax.set_title('Grafik Fungsi Metode Tabel')
+    ax.spines['left'].set_position('center')
+    ax.spines['bottom'].set_position('zero')
+    ax.spines['right'].set_color('none')
+    ax.spines['left'].set_color('none')
+    ax.xaxis.set_ticks_position('bottom')
+    ax.yaxis.set_ticks_position('left')
+
+    # plot the function
+    plt.plot(x, y, 'r')
+
+    # show the plot
+    plt.show()
+
+secant(p, q, r)
+grafik_kuadrat(p, q, r)
