@@ -1,0 +1,49 @@
+class fungsi:
+    def __init__(self, aa, bb, cc):
+        self.aa = aa
+        self.bb = bb
+        self.cc = cc
+
+    def fx(self, x):
+        return self.aa*x**2 + self.bb*x + self.cc
+        
+print("ax^2 + bx + c\n")
+aa = float(input("masukan nilai a: "))
+bb = float(input("masukan nilai b: "))
+cc = float(input("masukan nilai c: "))
+
+print(f"\nfungsi: ({aa})x^2 + ({bb})x + ({cc})\n")
+
+def biseksi(aa, bb, cc):
+
+    masuk = fungsi(aa, bb, cc)
+    a = float(input("Masukkan batas bawah: "))
+    b = float(input("Masukkan batas atas: "))
+    error = float(input("Masukkan error: "))
+    i=1
+
+    if (masuk.fx(a)*masuk.fx(b) > 0):
+        print("\nDiantara batas bawah dan atas tidak ditemukan titik nol")
+        return None
+
+    print ("\nLoop\ta\t\tb\t\tc\t\tf(a)\tf(c)\tf(a)*f(c)\t|a-b|")
+
+    while True:
+        c = (a+b)/2
+        print("%d\t\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t\t%.3f" % (i, a, b, c, masuk.fx(a), masuk.fx(c), masuk.fx(a)*masuk.fx(c), abs(a-b)))
+        if abs(a-b) <= error:
+            break
+        elif (masuk.fx(a)*masuk.fx(c) == 0):
+            break
+        elif (masuk.fx(a)*masuk.fx(c) < 0):
+            b = c
+        else:
+            a = c
+        i+=1
+
+    if abs(masuk.fx(a)) < abs (masuk.fx(b)):
+        return a
+    else:
+        return b
+    
+biseksi(aa,bb,cc)
